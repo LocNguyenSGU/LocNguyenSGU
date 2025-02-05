@@ -32,3 +32,8 @@
   <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL" />
   <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white" alt="Figma" />
 </p>
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/LocNguyenSGU/LocNguyenSGU/output/github-snake-dark.svg" />
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/LocNguyenSGU/LocNguyenSGU/output/github-snake.svg" />
+  <img alt="github-snake" src="https://raw.githubusercontent.com/LocNguyenSGU/LocNguyenSGU/output/github-snake.svg" />
+</picture>
