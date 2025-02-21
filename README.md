@@ -1,11 +1,13 @@
 <h1 align="center">Hi 👋, I'm Loc</h1>
 <h3 align="center">Aspiring Fullstack Website Developer</h3>
 
-- 🌱 I’m currently learning **Spring Boot and React**
+- 🌱 I’m currently focusing on **backend development**, learning **Spring Boot** and **scalable system design**
 
-- 🎓 I’m a student at **Sai Gon University**
+- 🎓 I’m a third student at **Sai Gon University**
 
-- 🎯 I aim to become a professional fullstack website developer within the next year
+- 🎯 My goal is to become a fullstack developer with **comprehensive knowledge** of technology. I also aim to build **strong teamwork skills** and **actively support others**. 🚀
+  
+- 📚 I’m working towards achieving **IELTS 6.0 in 2025**
 
 - 📫 How to reach me: **lockbkbang@gmail.com**
 
