@@ -10,6 +10,7 @@
 - 📚 I’m working towards achieving **IELTS 6.0 in 2025**
 
 - 📫 How to reach me: **lockbkbang@gmail.com**
+- 🌍 Personal Website: [locnguyensgu.github.io/nguyenhuuloc2k4](https://locnguyensgu.github.io/nguyenhuuloc2k4/)  
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
