@@ -1,7 +1,7 @@
 <h1 align="center">Hi 👋, I'm Loc</h1>
 <h3 align="center">Aspiring Fullstack Website Developer</h3>
 
-- 🌱 I’m currently focusing on **backend development**, learning **Spring Boot** and **scalable system design**
+- 🌱 I’m currently focusing on **backend development** and **scalable system design** and **AI**
 
 - 🎓 I’m a third student at **Sai Gon University**
 
