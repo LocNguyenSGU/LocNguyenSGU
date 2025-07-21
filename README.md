@@ -3,7 +3,7 @@
 
 - 🌱 I’m currently focusing on **backend development** and **scalable system design** and **AI**
 
-- 🎓 I’m a third student at **Sai Gon University**
+- 🎓 I’m a final year student at **Sai Gon University**
 
 - 🎯 My goal is to become a fullstack developer with **comprehensive knowledge** of technology. I also aim to build **strong teamwork skills** and **actively support others**. 🚀
   
