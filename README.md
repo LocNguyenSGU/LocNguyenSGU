@@ -6,7 +6,7 @@
 - 🎯 Goal: Become a **versatile fullstack developer** with strong teamwork & leadership skills
 - 📚 Working towards achieving **IELTS 6.0 (2025)**
 - 📫 Reach me at: **lockbkbang@gmail.com**
-- 🌍 Personal Website: [locnguyensguportfolio.store](https://locnguyensgu.github.io/nguyenhuuloc2k4/)
+- 🌍 Personal Website: [https://locnguyensgu.github.io/PersonalProject/](https://locnguyensgu.github.io/PersonalProject/)
 
 ---
 
