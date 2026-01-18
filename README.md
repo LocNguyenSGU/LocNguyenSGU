@@ -3,8 +3,7 @@
 ### 💡 About Me
 - 🎓 Final-year student at **Sai Gon University**
 - 🌱 Currently focusing on **Backend Development**, **Scalable System Design**, and **AI**
-- 🎯 Goal: Become a **versatile fullstack developer** with strong teamwork & leadership skills
-- 📚 Working towards achieving **IELTS 6.0 (2025)**
+- 🎯 Goal: Become a **versatile fullstack AI developer** with strong teamwork & leadership skills
 - 📫 Reach me at: **lockbkbang@gmail.com**
 - 🌍 Personal Website: [https://locnguyensgu.github.io/PersonalProject/](https://locnguyensgu.github.io/PersonalProject/)
 
