@@ -6,6 +6,7 @@
 - 🎯 Goal: Become a **versatile fullstack AI developer** with strong teamwork & leadership skills
 - 📫 Reach me at: **lockbkbang@gmail.com**
 - 🌍 Personal Website: [https://locnguyensgu.github.io/PersonalProject/](https://locnguyensgu.github.io/PersonalProject/)
+- 🌍 Personal Blog: [https://locnguyensgu-blog.vercel.app/](https://locnguyensgu-blog.vercel.app/)
 
 ---
 
