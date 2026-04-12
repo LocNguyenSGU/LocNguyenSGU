@@ -25,6 +25,37 @@ def make_record(**overrides: object) -> ContributionRecord:
     return base.__class__(**{**base.__dict__, **overrides})
 
 
+def test_group_contributions_orders_contributions_by_merged_at_descending() -> None:
+    older = make_record(
+        pr_number=1,
+        merged_at=datetime(2026, 4, 9, tzinfo=timezone.utc),
+    )
+    newer = make_record(
+        pr_number=2,
+        merged_at=datetime(2026, 4, 10, tzinfo=timezone.utc),
+    )
+
+    grouped = group_contributions([older, newer])
+
+    assert len(grouped) == 1
+    assert [contribution.pr_number for contribution in grouped[0].contributions] == [2, 1]
+
+
+def test_group_contributions_dedupes_duplicate_repo_and_pr_records() -> None:
+    first = make_record(
+        merged_at=datetime(2026, 4, 10, tzinfo=timezone.utc),
+    )
+    duplicate = make_record(
+        merged_at=datetime(2026, 4, 11, tzinfo=timezone.utc),
+    )
+
+    grouped = group_contributions([first, duplicate])
+
+    assert len(grouped) == 1
+    assert grouped[0].repo_full_name == "owner/repo"
+    assert [contribution.pr_number for contribution in grouped[0].contributions] == [101]
+
+
 def test_is_eligible_contribution_accepts_merged_fork_to_upstream() -> None:
     assert is_eligible_contribution(make_record(), github_user="nguyenhuuloc") is True
 
