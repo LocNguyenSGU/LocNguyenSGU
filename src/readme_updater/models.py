@@ -19,6 +19,7 @@ class ContributionRecord:
     head_repo_full_name: str
     head_repo_owner: str
     head_repo_is_fork: bool
+    head_repo_exists: bool
     base_repo_owner: str
     is_merged: bool
 

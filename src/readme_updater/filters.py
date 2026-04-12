@@ -9,6 +9,7 @@ def is_eligible_contribution(record: ContributionRecord, *, github_user: str) ->
     return all(
         [
             record.is_merged,
+            record.head_repo_exists,
             record.head_repo_is_fork,
             record.head_repo_owner == github_user,
             record.base_repo_owner != github_user,

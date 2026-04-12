@@ -19,6 +19,7 @@ def make_record(**overrides: object) -> ContributionRecord:
         head_repo_full_name="nguyenhuuloc/repo",
         head_repo_owner="nguyenhuuloc",
         head_repo_is_fork=True,
+        head_repo_exists=True,
         base_repo_owner="owner",
         is_merged=True,
     )
@@ -58,6 +59,34 @@ def test_group_contributions_dedupes_duplicate_repo_and_pr_records() -> None:
 
 def test_is_eligible_contribution_accepts_merged_fork_to_upstream() -> None:
     assert is_eligible_contribution(make_record(), github_user="nguyenhuuloc") is True
+
+
+def test_is_eligible_contribution_rejects_missing_head_repo() -> None:
+    assert is_eligible_contribution(
+        make_record(head_repo_exists=False),
+        github_user="nguyenhuuloc",
+    ) is False
+
+
+def test_is_eligible_contribution_rejects_unmerged_prs() -> None:
+    assert is_eligible_contribution(
+        make_record(is_merged=False),
+        github_user="nguyenhuuloc",
+    ) is False
+
+
+def test_is_eligible_contribution_rejects_non_matching_head_repo_owner() -> None:
+    assert is_eligible_contribution(
+        make_record(head_repo_owner="someone-else"),
+        github_user="nguyenhuuloc",
+    ) is False
+
+
+def test_is_eligible_contribution_uses_head_repo_owner_not_author_login() -> None:
+    assert is_eligible_contribution(
+        make_record(author_login="someone-else"),
+        github_user="nguyenhuuloc",
+    ) is True
 
 
 def test_is_eligible_contribution_rejects_non_fork_or_owned_base_repo() -> None:
