@@ -15,6 +15,7 @@ def test_load_config_reads_environment_defaults(
     monkeypatch.setenv("README_PATH", "README.md")
     monkeypatch.setenv("SVG_OUTPUT", "assets/contributions.svg")
     monkeypatch.setenv("DEFAULT_DAYS", "30")
+    monkeypatch.delenv("STATE_FILE", raising=False)
 
     config = load_config(
         days=None,
@@ -30,7 +31,7 @@ def test_load_config_reads_environment_defaults(
         github_user="octocat",
         readme_path=Path("README.md"),
         svg_output=Path("assets/contributions.svg"),
-        state_file=Path(".readme-updater-state.json"),
+        state_file=None,
         days=30,
         dry_run=False,
         verbose=False,

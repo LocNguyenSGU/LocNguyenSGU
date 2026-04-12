@@ -15,7 +15,7 @@ class RuntimeConfig:
     github_user: str
     readme_path: Path
     svg_output: Path
-    state_file: Path
+    state_file: Path | None
     days: int
     dry_run: bool
     verbose: bool
@@ -41,9 +41,8 @@ def load_config(
     svg_path = svg_output or Path(
         os.environ.get("SVG_OUTPUT", "assets/contributions.svg")
     )
-    state_path = state_file or Path(
-        os.environ.get("STATE_FILE", ".readme-updater-state.json")
-    )
+    state_file_env = os.environ.get("STATE_FILE")
+    state_path = state_file or (Path(state_file_env) if state_file_env else None)
 
     if days is None:
         default_days = os.environ.get("DEFAULT_DAYS", "30")
