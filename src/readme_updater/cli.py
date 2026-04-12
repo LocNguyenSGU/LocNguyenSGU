@@ -6,6 +6,8 @@ from pathlib import Path
 
 from readme_updater.config import ConfigError
 from readme_updater.config import load_config
+from readme_updater.readme_renderer import replace_marker_block
+from readme_updater.service import run_update
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -22,17 +24,12 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def _run_update() -> int:
-    print("readme-updater update skeleton wired; implementation pending.")
-    return 0
-
-
 def main() -> int:
     parser = build_parser()
     args = parser.parse_args()
     if args.command == "update":
         try:
-            load_config(
+            config = load_config(
                 days=args.days,
                 readme=args.readme,
                 svg_output=args.svg_output,
@@ -43,5 +40,16 @@ def main() -> int:
         except ConfigError as exc:
             print(str(exc), file=sys.stderr)
             return 1
-        return _run_update()
+        result = run_update(config)
+
+        if config.dry_run:
+            print(result["readme_block"])
+            return 0
+
+        current_readme = config.readme_path.read_text()
+        updated_readme = replace_marker_block(current_readme, result["readme_block"])
+        config.readme_path.write_text(updated_readme)
+        config.svg_output.parent.mkdir(parents=True, exist_ok=True)
+        config.svg_output.write_text(result["svg"])
+        return 0
     return 0

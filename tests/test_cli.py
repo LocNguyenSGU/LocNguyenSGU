@@ -5,6 +5,7 @@ import pytest
 
 from readme_updater.cli import build_parser
 from readme_updater.cli import main
+from readme_updater.config import RuntimeConfig
 from readme_updater.models import ContributionRecord
 from readme_updater.service import collect_recent_contributions
 
@@ -35,39 +36,83 @@ def test_build_parser_accepts_expected_flags() -> None:
     assert args.verbose is True
 
 
-def test_main_update_emits_placeholder_message(
-    monkeypatch, capsys
+def test_main_update_writes_svg_and_readme(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
 ) -> None:
-    monkeypatch.setenv("GITHUB_TOKEN", "token")
-    monkeypatch.setenv("GITHUB_USER", "octocat")
-    monkeypatch.setenv("README_PATH", "README.md")
-    monkeypatch.setenv("SVG_OUTPUT", "assets/contributions.svg")
-    monkeypatch.setenv("DEFAULT_DAYS", "30")
-    monkeypatch.setattr(
-        "sys.argv",
-        [
-            "readme-updater",
-            "update",
-            "--days",
-            "30",
-            "--readme",
-            "README.md",
-            "--svg-output",
-            "assets/contributions.svg",
-            "--state-file",
-            ".state/contributions.json",
-            "--dry-run",
-            "--verbose",
-        ],
+    readme_path = tmp_path / "README.md"
+    readme_path.write_text(
+        "before\n<!-- contributions:start -->\nold\n<!-- contributions:end -->\nafter\n"
     )
+    svg_path = tmp_path / "assets" / "contributions.svg"
+
+    config = RuntimeConfig(
+        github_token="token",
+        github_user="nguyenhuuloc",
+        readme_path=readme_path,
+        svg_output=svg_path,
+        state_file=tmp_path / ".state.json",
+        days=30,
+        dry_run=False,
+        verbose=False,
+    )
+
+    monkeypatch.setattr("readme_updater.cli.load_config", lambda **_: config)
+    monkeypatch.setattr(
+        "readme_updater.cli.run_update",
+        lambda runtime_config: {
+            "readme_block": "## Recent Open Source Contributions",
+            "svg": "<svg></svg>",
+        },
+    )
+    monkeypatch.setattr("sys.argv", ["readme-updater", "update"])
+
+    exit_code = main()
+
+    assert exit_code == 0
+    assert "## Recent Open Source Contributions" in readme_path.read_text()
+    assert svg_path.read_text() == "<svg></svg>"
+
+
+def test_main_update_dry_run_does_not_modify_files(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    readme_path = tmp_path / "README.md"
+    readme_path.write_text(
+        "before\n<!-- contributions:start -->\nold\n<!-- contributions:end -->\nafter\n"
+    )
+
+    config = RuntimeConfig(
+        github_token="token",
+        github_user="nguyenhuuloc",
+        readme_path=readme_path,
+        svg_output=tmp_path / "assets" / "contributions.svg",
+        state_file=tmp_path / ".state.json",
+        days=30,
+        dry_run=True,
+        verbose=False,
+    )
+
+    monkeypatch.setattr("readme_updater.cli.load_config", lambda **_: config)
+    monkeypatch.setattr(
+        "readme_updater.cli.run_update",
+        lambda runtime_config: {
+            "readme_block": "## Recent Open Source Contributions",
+            "svg": "<svg></svg>",
+        },
+    )
+    monkeypatch.setattr("sys.argv", ["readme-updater", "update"])
 
     exit_code = main()
 
     assert exit_code == 0
     assert (
-        capsys.readouterr().out
-        == "readme-updater update skeleton wired; implementation pending.\n"
+        readme_path.read_text()
+        == "before\n<!-- contributions:start -->\nold\n<!-- contributions:end -->\nafter\n"
     )
+    assert "## Recent Open Source Contributions" in capsys.readouterr().out
 
 
 def test_main_update_returns_error_for_missing_credentials(
