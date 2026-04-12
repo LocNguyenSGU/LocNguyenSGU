@@ -14,7 +14,7 @@ class ContributionRecord:
     pr_number: int
     pr_title: str
     pr_url: str
-    merged_at: datetime
+    merged_at: datetime | None
     author_login: str
     head_repo_full_name: str
     head_repo_owner: str

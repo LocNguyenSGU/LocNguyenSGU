@@ -42,7 +42,14 @@ class GitHubClient:
                 f"GitHub pull request request failed with status {exc.response.status_code}"
             ) from exc
         payload = response.json()
-        merged_at = datetime.fromisoformat(payload["merged_at"].replace("Z", "+00:00"))
+        merged_at_raw = payload["merged_at"]
+        merged_at = (
+            datetime.fromisoformat(merged_at_raw.replace("Z", "+00:00")).astimezone(
+                timezone.utc
+            )
+            if merged_at_raw
+            else None
+        )
         head_repo = payload["head"]["repo"]
         base_repo = payload["base"]["repo"]
         return ContributionRecord(
@@ -54,7 +61,7 @@ class GitHubClient:
             pr_number=payload["number"],
             pr_title=payload["title"],
             pr_url=payload["html_url"],
-            merged_at=merged_at.astimezone(timezone.utc),
+            merged_at=merged_at,
             author_login=payload["user"]["login"],
             head_repo_full_name=head_repo["full_name"] if head_repo else "",
             head_repo_owner=head_repo["owner"]["login"] if head_repo else "",

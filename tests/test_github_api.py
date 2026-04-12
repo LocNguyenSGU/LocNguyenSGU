@@ -56,3 +56,42 @@ def test_fetch_notifications_wraps_http_errors() -> None:
     client = GitHubClient(github_token="token")
     with pytest.raises(GitHubApiError, match="401"):
         client.fetch_notifications()
+
+
+@respx.mock
+def test_fetch_pull_request_handles_unmerged_pull_requests() -> None:
+    respx.get("https://api.github.com/repos/owner/repo/pulls/999").mock(
+        return_value=httpx.Response(
+            200,
+            json={
+                "number": 999,
+                "title": "Work in progress",
+                "html_url": "https://github.com/owner/repo/pull/999",
+                "merged_at": None,
+                "user": {"login": "nguyenhuuloc"},
+                "merged": False,
+                "head": {
+                    "repo": {
+                        "full_name": "nguyenhuuloc/repo",
+                        "fork": True,
+                        "owner": {"login": "nguyenhuuloc"},
+                    }
+                },
+                "base": {
+                    "repo": {
+                        "full_name": "owner/repo",
+                        "html_url": "https://github.com/owner/repo",
+                        "stargazers_count": 12400,
+                        "name": "repo",
+                        "owner": {"login": "owner"},
+                    }
+                },
+            },
+        )
+    )
+
+    client = GitHubClient(github_token="token")
+    record = client.fetch_pull_request("owner", "repo", 999)
+
+    assert record.is_merged is False
+    assert record.merged_at is None
