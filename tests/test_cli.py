@@ -1,9 +1,12 @@
+from datetime import datetime, timezone
 from pathlib import Path
 
 import pytest
 
 from readme_updater.cli import build_parser
 from readme_updater.cli import main
+from readme_updater.models import ContributionRecord
+from readme_updater.service import collect_recent_contributions
 
 
 def test_build_parser_accepts_expected_flags() -> None:
@@ -94,3 +97,53 @@ def test_main_update_returns_error_for_missing_credentials(
         capsys.readouterr().err
         == "Missing required environment variable: GITHUB_TOKEN\n"
     )
+
+
+class FakeGitHubClient:
+    def fetch_notifications(self) -> list[dict]:
+        return [
+            {
+                "subject": {
+                    "type": "PullRequest",
+                    "url": "https://api.github.com/repos/owner/repo/pulls/101",
+                }
+            },
+            {
+                "subject": {
+                    "type": "PullRequest",
+                    "url": "https://api.github.com/repos/owner/repo/pulls/101",
+                }
+            },
+        ]
+
+    def fetch_pull_request(self, owner: str, repo: str, number: int) -> ContributionRecord:
+        return ContributionRecord(
+            repo_full_name="owner/repo",
+            repo_url="https://github.com/owner/repo",
+            repo_owner="owner",
+            repo_name="repo",
+            upstream_stars=12400,
+            pr_number=101,
+            pr_title="Improve parser fallback",
+            pr_url="https://github.com/owner/repo/pull/101",
+            merged_at=datetime(2026, 4, 10, tzinfo=timezone.utc),
+            author_login="nguyenhuuloc",
+            head_repo_full_name="nguyenhuuloc/repo",
+            head_repo_owner="nguyenhuuloc",
+            head_repo_is_fork=True,
+            head_repo_exists=True,
+            base_repo_owner="owner",
+            is_merged=True,
+        )
+
+
+def test_collect_recent_contributions_filters_by_time_and_dedupes() -> None:
+    results = collect_recent_contributions(
+        github_client=FakeGitHubClient(),
+        github_user="nguyenhuuloc",
+        days=30,
+        now=datetime(2026, 4, 12, tzinfo=timezone.utc),
+    )
+
+    assert len(results) == 1
+    assert results[0].pr_number == 101
