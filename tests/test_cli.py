@@ -117,8 +117,10 @@ def test_main_update_dry_run_does_not_modify_files(
 
 def test_main_update_returns_error_for_missing_credentials(
     monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
     capsys,
 ) -> None:
+    monkeypatch.chdir(tmp_path)
     monkeypatch.delenv("GITHUB_TOKEN", raising=False)
     monkeypatch.delenv("GITHUB_USER", raising=False)
     monkeypatch.setattr(

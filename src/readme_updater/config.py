@@ -21,6 +21,20 @@ class RuntimeConfig:
     verbose: bool
 
 
+def _load_dotenv(dotenv_path: Path) -> None:
+    if not dotenv_path.exists():
+        return
+
+    for raw_line in dotenv_path.read_text().splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        key = key.strip()
+        value = value.strip().strip('"').strip("'")
+        os.environ.setdefault(key, value)
+
+
 def load_config(
     *,
     days: int | None,
@@ -30,6 +44,8 @@ def load_config(
     dry_run: bool,
     verbose: bool,
 ) -> RuntimeConfig:
+    _load_dotenv(Path.cwd() / ".env")
+
     github_token = os.environ.get("GITHUB_TOKEN")
     github_user = os.environ.get("GITHUB_USER")
     if not github_token:

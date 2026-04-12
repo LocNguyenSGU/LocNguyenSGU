@@ -57,6 +57,48 @@ def test_load_config_reads_state_file_from_environment(
     assert config.state_file == Path(".state/env-state.json")
 
 
+def test_load_config_reads_missing_values_from_dotenv(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.delenv("GITHUB_TOKEN", raising=False)
+    monkeypatch.delenv("GITHUB_USER", raising=False)
+    monkeypatch.delenv("README_PATH", raising=False)
+    monkeypatch.delenv("SVG_OUTPUT", raising=False)
+    monkeypatch.delenv("DEFAULT_DAYS", raising=False)
+    monkeypatch.delenv("STATE_FILE", raising=False)
+
+    (tmp_path / ".env").write_text(
+        "GITHUB_TOKEN=token-from-env-file\n"
+        "GITHUB_USER=dotenv-user\n"
+        "README_PATH=PROFILE.md\n"
+        "SVG_OUTPUT=assets/dotenv.svg\n"
+        "DEFAULT_DAYS=7\n"
+        "STATE_FILE=.state/dotenv.json\n"
+    )
+
+    config = load_config(
+        days=None,
+        readme=None,
+        svg_output=None,
+        state_file=None,
+        dry_run=False,
+        verbose=False,
+    )
+
+    assert config == RuntimeConfig(
+        github_token="token-from-env-file",
+        github_user="dotenv-user",
+        readme_path=Path("PROFILE.md"),
+        svg_output=Path("assets/dotenv.svg"),
+        state_file=Path(".state/dotenv.json"),
+        days=7,
+        dry_run=False,
+        verbose=False,
+    )
+
+
 def test_load_config_cli_values_override_environment(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -102,7 +144,9 @@ def test_load_config_rejects_negative_days(
 
 def test_load_config_requires_github_credentials(
     monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
 ) -> None:
+    monkeypatch.chdir(tmp_path)
     monkeypatch.delenv("GITHUB_TOKEN", raising=False)
     monkeypatch.delenv("GITHUB_USER", raising=False)
 
