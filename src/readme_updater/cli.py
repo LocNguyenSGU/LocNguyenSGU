@@ -3,6 +3,8 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from readme_updater.config import load_config
+
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="readme-updater")
@@ -27,5 +29,13 @@ def main() -> int:
     parser = build_parser()
     args = parser.parse_args()
     if args.command == "update":
+        load_config(
+            days=args.days,
+            readme=args.readme,
+            svg_output=args.svg_output,
+            state_file=args.state_file,
+            dry_run=args.dry_run,
+            verbose=args.verbose,
+        )
         return _run_update()
     return 0

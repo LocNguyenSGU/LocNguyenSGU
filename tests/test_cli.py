@@ -33,6 +33,11 @@ def test_build_parser_accepts_expected_flags() -> None:
 def test_main_update_emits_placeholder_message(
     monkeypatch, capsys
 ) -> None:
+    monkeypatch.setenv("GITHUB_TOKEN", "token")
+    monkeypatch.setenv("GITHUB_USER", "octocat")
+    monkeypatch.setenv("README_PATH", "README.md")
+    monkeypatch.setenv("SVG_OUTPUT", "assets/contributions.svg")
+    monkeypatch.setenv("DEFAULT_DAYS", "30")
     monkeypatch.setattr(
         "sys.argv",
         [
