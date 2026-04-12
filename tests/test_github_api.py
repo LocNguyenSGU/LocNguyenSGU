@@ -1,0 +1,46 @@
+from __future__ import annotations
+
+from datetime import datetime, timezone
+import json
+from pathlib import Path
+
+import httpx
+import respx
+
+from readme_updater.github_api import GitHubClient
+
+
+def load_fixture(name: str) -> dict | list[dict]:
+    return json.loads(Path("tests/fixtures", name).read_text())
+
+
+@respx.mock
+def test_fetch_notifications_returns_pull_request_candidates() -> None:
+    respx.get("https://api.github.com/notifications").mock(
+        return_value=httpx.Response(200, json=load_fixture("notifications.json"))
+    )
+
+    client = GitHubClient(github_token="token")
+    notifications = client.fetch_notifications()
+
+    assert len(notifications) == 3
+    assert notifications[0]["subject"]["type"] == "PullRequest"
+
+
+@respx.mock
+def test_fetch_pull_request_normalizes_expected_fields() -> None:
+    respx.get("https://api.github.com/repos/owner/repo/pulls/101").mock(
+        return_value=httpx.Response(200, json=load_fixture("pull_repo1_pr101.json"))
+    )
+
+    client = GitHubClient(github_token="token")
+    record = client.fetch_pull_request("owner", "repo", 101)
+
+    assert record.repo_full_name == "owner/repo"
+    assert record.upstream_stars == 12400
+    assert record.pr_number == 101
+    assert record.head_repo_owner == "nguyenhuuloc"
+    assert record.head_repo_is_fork is True
+    assert record.head_repo_exists is True
+    assert record.is_merged is True
+    assert record.merged_at == datetime(2026, 4, 10, 12, 0, tzinfo=timezone.utc)

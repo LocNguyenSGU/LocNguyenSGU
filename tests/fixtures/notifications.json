@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "reason": "state_change",
+    "subject": {
+      "title": "Improve parser fallback",
+      "url": "https://api.github.com/repos/owner/repo/pulls/101",
+      "latest_comment_url": "https://api.github.com/repos/owner/repo/issues/comments/1",
+      "type": "PullRequest"
+    }
+  },
+  {
+    "id": "2",
+    "reason": "state_change",
+    "subject": {
+      "title": "Fix cache invalidation edge case",
+      "url": "https://api.github.com/repos/owner/repo/pulls/102",
+      "latest_comment_url": "https://api.github.com/repos/owner/repo/issues/comments/2",
+      "type": "PullRequest"
+    }
+  },
+  {
+    "id": "3",
+    "reason": "state_change",
+    "subject": {
+      "title": "Add CLI timeout handling",
+      "url": "https://api.github.com/repos/another/repo/pulls/88",
+      "latest_comment_url": "https://api.github.com/repos/another/repo/issues/comments/3",
+      "type": "PullRequest"
+    }
+  }
+]
