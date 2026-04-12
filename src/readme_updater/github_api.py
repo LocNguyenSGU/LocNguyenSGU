@@ -24,13 +24,23 @@ class GitHubClient:
         )
 
     def fetch_notifications(self) -> list[dict]:
-        response = self._client.get("/notifications")
-        response.raise_for_status()
+        try:
+            response = self._client.get("/notifications")
+            response.raise_for_status()
+        except httpx.HTTPStatusError as exc:
+            raise GitHubApiError(
+                f"GitHub notifications request failed with status {exc.response.status_code}"
+            ) from exc
         return response.json()
 
     def fetch_pull_request(self, owner: str, repo: str, number: int) -> ContributionRecord:
-        response = self._client.get(f"/repos/{owner}/{repo}/pulls/{number}")
-        response.raise_for_status()
+        try:
+            response = self._client.get(f"/repos/{owner}/{repo}/pulls/{number}")
+            response.raise_for_status()
+        except httpx.HTTPStatusError as exc:
+            raise GitHubApiError(
+                f"GitHub pull request request failed with status {exc.response.status_code}"
+            ) from exc
         payload = response.json()
         merged_at = datetime.fromisoformat(payload["merged_at"].replace("Z", "+00:00"))
         head_repo = payload["head"]["repo"]
@@ -46,9 +56,9 @@ class GitHubClient:
             pr_url=payload["html_url"],
             merged_at=merged_at.astimezone(timezone.utc),
             author_login=payload["user"]["login"],
-            head_repo_full_name=head_repo["full_name"],
-            head_repo_owner=head_repo["owner"]["login"],
-            head_repo_is_fork=head_repo["fork"],
+            head_repo_full_name=head_repo["full_name"] if head_repo else "",
+            head_repo_owner=head_repo["owner"]["login"] if head_repo else "",
+            head_repo_is_fork=head_repo["fork"] if head_repo else False,
             head_repo_exists=head_repo is not None,
             base_repo_owner=base_repo["owner"]["login"],
             is_merged=payload["merged"],

@@ -5,8 +5,10 @@ import json
 from pathlib import Path
 
 import httpx
+import pytest
 import respx
 
+from readme_updater.github_api import GitHubApiError
 from readme_updater.github_api import GitHubClient
 
 
@@ -44,3 +46,13 @@ def test_fetch_pull_request_normalizes_expected_fields() -> None:
     assert record.head_repo_exists is True
     assert record.is_merged is True
     assert record.merged_at == datetime(2026, 4, 10, 12, 0, tzinfo=timezone.utc)
+
+
+@respx.mock
+def test_fetch_notifications_wraps_http_errors() -> None:
+    respx.get("https://api.github.com/notifications").mock(
+        return_value=httpx.Response(401, json={"message": "Bad credentials"})
+    )
+    client = GitHubClient(github_token="token")
+    with pytest.raises(GitHubApiError, match="401"):
+        client.fetch_notifications()

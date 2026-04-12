@@ -6,6 +6,8 @@ from pathlib import Path
 
 from readme_updater.config import ConfigError
 from readme_updater.config import load_config
+from readme_updater.github_api import GitHubApiError
+from readme_updater.readme_renderer import ReadmeMarkerError
 from readme_updater.readme_renderer import replace_marker_block
 from readme_updater.service import run_update
 
@@ -37,19 +39,19 @@ def main() -> int:
                 dry_run=args.dry_run,
                 verbose=args.verbose,
             )
-        except ConfigError as exc:
+            result = run_update(config)
+
+            if config.dry_run:
+                print(result["readme_block"])
+                return 0
+
+            current_readme = config.readme_path.read_text()
+            updated_readme = replace_marker_block(current_readme, result["readme_block"])
+            config.readme_path.write_text(updated_readme)
+            config.svg_output.parent.mkdir(parents=True, exist_ok=True)
+            config.svg_output.write_text(result["svg"])
+            return 0
+        except (ConfigError, GitHubApiError, ReadmeMarkerError) as exc:
             print(str(exc), file=sys.stderr)
             return 1
-        result = run_update(config)
-
-        if config.dry_run:
-            print(result["readme_block"])
-            return 0
-
-        current_readme = config.readme_path.read_text()
-        updated_readme = replace_marker_block(current_readme, result["readme_block"])
-        config.readme_path.write_text(updated_readme)
-        config.svg_output.parent.mkdir(parents=True, exist_ok=True)
-        config.svg_output.write_text(result["svg"])
-        return 0
     return 0

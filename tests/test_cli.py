@@ -192,3 +192,31 @@ def test_collect_recent_contributions_filters_by_time_and_dedupes() -> None:
 
     assert len(results) == 1
     assert results[0].pr_number == 101
+
+
+def test_main_returns_non_zero_on_missing_readme_markers(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    readme_path = tmp_path / "README.md"
+    readme_path.write_text("no markers here")
+
+    config = RuntimeConfig(
+        github_token="token",
+        github_user="nguyenhuuloc",
+        readme_path=readme_path,
+        svg_output=tmp_path / "assets" / "contributions.svg",
+        state_file=tmp_path / ".state.json",
+        days=30,
+        dry_run=False,
+        verbose=False,
+    )
+
+    monkeypatch.setattr("readme_updater.cli.load_config", lambda **_: config)
+    monkeypatch.setattr(
+        "readme_updater.cli.run_update",
+        lambda runtime_config: {"readme_block": "content", "svg": "<svg></svg>"},
+    )
+    monkeypatch.setattr("sys.argv", ["readme-updater", "update"])
+
+    assert main() == 1
