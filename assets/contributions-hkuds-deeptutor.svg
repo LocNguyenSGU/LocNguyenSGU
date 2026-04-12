@@ -13,5 +13,5 @@
     <text x="360" y="86" fill="#1F2937" font-family="Arial, sans-serif" font-size="22" font-weight="700">1 upstream repo</text>
     <text x="360" y="118" fill="#374151" font-family="Arial, sans-serif" font-size="18">Top target: HKUDS/DeepTutor</text>
     <text x="360" y="146" fill="#1D4ED8" font-family="Arial, sans-serif" font-size="16">17.1k stars</text>
-    <text x="360" y="172" fill="#6B7280" font-family="Arial, sans-serif" font-size="14">Last 20 days</text>
+    <text x="360" y="172" fill="#6B7280" font-family="Arial, sans-serif" font-size="14">Last 30 days</text>
 </svg>
