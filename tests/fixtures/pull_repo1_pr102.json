@@ -1,0 +1,24 @@
+{
+  "number": 102,
+  "title": "Fix cache invalidation edge case",
+  "html_url": "https://github.com/owner/repo/pull/102",
+  "merged_at": "2026-04-03T09:30:00Z",
+  "user": {"login": "nguyenhuuloc"},
+  "merged": true,
+  "head": {
+    "repo": {
+      "full_name": "nguyenhuuloc/repo",
+      "fork": true,
+      "owner": {"login": "nguyenhuuloc"}
+    }
+  },
+  "base": {
+    "repo": {
+      "full_name": "owner/repo",
+      "html_url": "https://github.com/owner/repo",
+      "stargazers_count": 12400,
+      "name": "repo",
+      "owner": {"login": "owner"}
+    }
+  }
+}

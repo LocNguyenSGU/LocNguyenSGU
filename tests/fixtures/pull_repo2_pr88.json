@@ -1,0 +1,24 @@
+{
+  "number": 88,
+  "title": "Add CLI timeout handling",
+  "html_url": "https://github.com/another/repo/pull/88",
+  "merged_at": "2026-04-05T16:45:00Z",
+  "user": {"login": "nguyenhuuloc"},
+  "merged": true,
+  "head": {
+    "repo": {
+      "full_name": "nguyenhuuloc/another-repo",
+      "fork": true,
+      "owner": {"login": "nguyenhuuloc"}
+    }
+  },
+  "base": {
+    "repo": {
+      "full_name": "another/repo",
+      "html_url": "https://github.com/another/repo",
+      "stargazers_count": 8900,
+      "name": "repo",
+      "owner": {"login": "another"}
+    }
+  }
+}
