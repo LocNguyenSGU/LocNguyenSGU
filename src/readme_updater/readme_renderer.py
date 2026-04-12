@@ -20,6 +20,10 @@ def format_stars(count: int) -> str:
     return f"{value:.1f}k"
 
 
+def _escape_link_text(text: str) -> str:
+    return text.replace("\\", "\\\\").replace("]", "\\]")
+
+
 def render_readme_block(groups: list[RepositoryContributions], *, days: int) -> str:
     lines = [
         "## Recent Open Source Contributions",
@@ -42,7 +46,7 @@ def render_readme_block(groups: list[RepositoryContributions], *, days: int) -> 
         for contribution in group.contributions:
             merged_date = contribution.merged_at.date().isoformat()
             lines.append(
-                f"- [{contribution.pr_title}]({contribution.pr_url}) · merged {merged_date}"
+                f"- [{_escape_link_text(contribution.pr_title)}]({contribution.pr_url}) · merged {merged_date}"
             )
         lines.append("")
 
@@ -53,8 +57,13 @@ def replace_marker_block(readme_text: str, block_text: str) -> str:
     if START_MARKER not in readme_text or END_MARKER not in readme_text:
         raise ReadmeMarkerError("README is missing contributions markers")
 
-    start_index = readme_text.index(START_MARKER) + len(START_MARKER)
-    end_index = readme_text.index(END_MARKER)
+    start_marker_index = readme_text.index(START_MARKER)
+    end_marker_index = readme_text.index(END_MARKER)
+    if end_marker_index < start_marker_index:
+        raise ReadmeMarkerError("README contributions markers are out of order")
+
+    start_index = start_marker_index + len(START_MARKER)
+    end_index = end_marker_index
 
     before = readme_text[:start_index]
     after = readme_text[end_index:]
