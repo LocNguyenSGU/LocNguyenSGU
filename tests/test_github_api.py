@@ -30,6 +30,47 @@ def test_fetch_notifications_returns_pull_request_candidates() -> None:
 
 
 @respx.mock
+def test_fetch_notifications_requests_all_since_and_paginates() -> None:
+    first_page_payload = [
+        {
+            "id": str(index),
+            "reason": "state_change",
+            "subject": {
+                "title": f"PR {index}",
+                "url": f"https://api.github.com/repos/owner/repo/pulls/{index}",
+                "type": "PullRequest",
+            },
+        }
+        for index in range(1, 51)
+    ]
+    page_one = respx.get(
+        "https://api.github.com/notifications",
+        params={
+            "all": "true",
+            "since": "2026-03-13T00:00:00Z",
+            "per_page": "50",
+            "page": "1",
+        },
+    ).mock(return_value=httpx.Response(200, json=first_page_payload))
+    page_two = respx.get(
+        "https://api.github.com/notifications",
+        params={
+            "all": "true",
+            "since": "2026-03-13T00:00:00Z",
+            "per_page": "50",
+            "page": "2",
+        },
+    ).mock(return_value=httpx.Response(200, json=[]))
+
+    client = GitHubClient(github_token="token")
+    notifications = client.fetch_notifications(since="2026-03-13T00:00:00Z")
+
+    assert len(notifications) == 50
+    assert page_one.called is True
+    assert page_two.called is True
+
+
+@respx.mock
 def test_fetch_pull_request_normalizes_expected_fields() -> None:
     respx.get("https://api.github.com/repos/owner/repo/pulls/101").mock(
         return_value=httpx.Response(200, json=load_fixture("pull_repo1_pr101.json"))

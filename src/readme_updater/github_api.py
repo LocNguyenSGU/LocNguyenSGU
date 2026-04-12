@@ -23,15 +23,30 @@ class GitHubClient:
             timeout=20.0,
         )
 
-    def fetch_notifications(self) -> list[dict]:
-        try:
-            response = self._client.get("/notifications")
-            response.raise_for_status()
-        except httpx.HTTPStatusError as exc:
-            raise GitHubApiError(
-                f"GitHub notifications request failed with status {exc.response.status_code}"
-            ) from exc
-        return response.json()
+    def fetch_notifications(self, *, since: str | None = None) -> list[dict]:
+        notifications: list[dict] = []
+        page = 1
+        while True:
+            params = {
+                "all": "true",
+                "per_page": "50",
+                "page": str(page),
+            }
+            if since is not None:
+                params["since"] = since
+            try:
+                response = self._client.get("/notifications", params=params)
+                response.raise_for_status()
+            except httpx.HTTPStatusError as exc:
+                raise GitHubApiError(
+                    f"GitHub notifications request failed with status {exc.response.status_code}"
+                ) from exc
+            page_items = response.json()
+            notifications.extend(page_items)
+            if len(page_items) < 50:
+                break
+            page += 1
+        return notifications
 
     def fetch_pull_request(self, owner: str, repo: str, number: int) -> ContributionRecord:
         try:

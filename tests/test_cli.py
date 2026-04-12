@@ -8,6 +8,7 @@ from readme_updater.cli import main
 from readme_updater.config import RuntimeConfig
 from readme_updater.models import ContributionRecord
 from readme_updater.service import collect_recent_contributions
+from readme_updater.service import describe_ineligibility
 
 
 def test_build_parser_accepts_expected_flags() -> None:
@@ -147,7 +148,7 @@ def test_main_update_returns_error_for_missing_credentials(
 
 
 class FakeGitHubClient:
-    def fetch_notifications(self) -> list[dict]:
+    def fetch_notifications(self, *, since: str | None = None) -> list[dict]:
         return [
             {
                 "subject": {
@@ -194,6 +195,81 @@ def test_collect_recent_contributions_filters_by_time_and_dedupes() -> None:
 
     assert len(results) == 1
     assert results[0].pr_number == 101
+
+
+def test_collect_recent_contributions_logs_verbose_skip_reasons() -> None:
+    messages: list[str] = []
+
+    class VerboseFakeGitHubClient:
+        def fetch_notifications(self, *, since: str | None = None) -> list[dict]:
+            return [
+                {
+                    "subject": {
+                        "type": "PullRequest",
+                        "url": "https://api.github.com/repos/owner/repo/pulls/101",
+                    }
+                }
+            ]
+
+        def fetch_pull_request(
+            self, owner: str, repo: str, number: int
+        ) -> ContributionRecord:
+            return ContributionRecord(
+                repo_full_name="owner/repo",
+                repo_url="https://github.com/owner/repo",
+                repo_owner="owner",
+                repo_name="repo",
+                upstream_stars=12400,
+                pr_number=101,
+                pr_title="Improve parser fallback",
+                pr_url="https://github.com/owner/repo/pull/101",
+                merged_at=datetime(2026, 4, 10, tzinfo=timezone.utc),
+                author_login="nguyenhuuloc",
+                head_repo_full_name="nguyenhuuloc/repo",
+                head_repo_owner="nguyenhuuloc",
+                head_repo_is_fork=False,
+                head_repo_exists=True,
+                base_repo_owner="owner",
+                is_merged=True,
+            )
+
+    results = collect_recent_contributions(
+        github_client=VerboseFakeGitHubClient(),
+        github_user="nguyenhuuloc",
+        days=30,
+        now=datetime(2026, 4, 12, tzinfo=timezone.utc),
+        logger=messages.append,
+    )
+
+    assert results == []
+    assert "Fetched 1 notifications" in messages[0]
+    assert any("head_repo_is_not_fork" in message for message in messages)
+
+
+def test_describe_ineligibility_returns_expected_reason() -> None:
+    reason = describe_ineligibility(
+        ContributionRecord(
+            repo_full_name="owner/repo",
+            repo_url="https://github.com/owner/repo",
+            repo_owner="owner",
+            repo_name="repo",
+            upstream_stars=12400,
+            pr_number=101,
+            pr_title="Improve parser fallback",
+            pr_url="https://github.com/owner/repo/pull/101",
+            merged_at=datetime(2026, 4, 10, tzinfo=timezone.utc),
+            author_login="nguyenhuuloc",
+            head_repo_full_name="nguyenhuuloc/repo",
+            head_repo_owner="nguyenhuuloc",
+            head_repo_is_fork=False,
+            head_repo_exists=True,
+            base_repo_owner="owner",
+            is_merged=True,
+        ),
+        github_user="nguyenhuuloc",
+    )
+
+    assert reason == "head_repo_is_not_fork"
 
 
 def test_main_returns_non_zero_on_missing_readme_markers(
