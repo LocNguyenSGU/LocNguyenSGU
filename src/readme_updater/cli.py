@@ -18,7 +18,14 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def _run_update() -> int:
+    print("readme-updater update skeleton wired; implementation pending.")
+    return 0
+
+
 def main() -> int:
     parser = build_parser()
-    parser.parse_args()
+    args = parser.parse_args()
+    if args.command == "update":
+        return _run_update()
     return 0

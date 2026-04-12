@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from readme_updater.cli import build_parser
+from readme_updater.cli import main
 
 
 def test_build_parser_accepts_expected_flags() -> None:
@@ -27,3 +28,33 @@ def test_build_parser_accepts_expected_flags() -> None:
     assert args.state_file == Path(".state/contributions.json")
     assert args.dry_run is True
     assert args.verbose is True
+
+
+def test_main_update_emits_placeholder_message(
+    monkeypatch, capsys
+) -> None:
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "readme-updater",
+            "update",
+            "--days",
+            "30",
+            "--readme",
+            "README.md",
+            "--svg-output",
+            "assets/contributions.svg",
+            "--state-file",
+            ".state/contributions.json",
+            "--dry-run",
+            "--verbose",
+        ],
+    )
+
+    exit_code = main()
+
+    assert exit_code == 0
+    assert (
+        capsys.readouterr().out
+        == "readme-updater update skeleton wired; implementation pending.\n"
+    )
