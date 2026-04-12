@@ -53,6 +53,9 @@ def load_config(
     else:
         resolved_days = days
 
+    if resolved_days <= 0:
+        raise ConfigError("days must be greater than 0")
+
     return RuntimeConfig(
         github_token=github_token,
         github_user=github_user,

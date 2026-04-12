@@ -38,6 +38,25 @@ def test_load_config_reads_environment_defaults(
     )
 
 
+def test_load_config_reads_state_file_from_environment(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("GITHUB_TOKEN", "token")
+    monkeypatch.setenv("GITHUB_USER", "octocat")
+    monkeypatch.setenv("STATE_FILE", ".state/env-state.json")
+
+    config = load_config(
+        days=30,
+        readme=Path("README.md"),
+        svg_output=Path("assets/contributions.svg"),
+        state_file=None,
+        dry_run=False,
+        verbose=False,
+    )
+
+    assert config.state_file == Path(".state/env-state.json")
+
+
 def test_load_config_cli_values_override_environment(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -62,6 +81,23 @@ def test_load_config_cli_values_override_environment(
     assert config.state_file == Path(".state/custom.json")
     assert config.dry_run is True
     assert config.verbose is True
+
+
+def test_load_config_rejects_negative_days(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("GITHUB_TOKEN", "token")
+    monkeypatch.setenv("GITHUB_USER", "octocat")
+
+    with pytest.raises(ConfigError, match="days must be greater than 0"):
+        load_config(
+            days=-1,
+            readme=Path("README.md"),
+            svg_output=Path("assets/contributions.svg"),
+            state_file=None,
+            dry_run=False,
+            verbose=False,
+        )
 
 
 def test_load_config_requires_github_credentials(

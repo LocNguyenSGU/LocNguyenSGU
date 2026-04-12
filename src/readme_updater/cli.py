@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import argparse
+import sys
 from pathlib import Path
 
+from readme_updater.config import ConfigError
 from readme_updater.config import load_config
 
 
@@ -29,13 +31,17 @@ def main() -> int:
     parser = build_parser()
     args = parser.parse_args()
     if args.command == "update":
-        load_config(
-            days=args.days,
-            readme=args.readme,
-            svg_output=args.svg_output,
-            state_file=args.state_file,
-            dry_run=args.dry_run,
-            verbose=args.verbose,
-        )
+        try:
+            load_config(
+                days=args.days,
+                readme=args.readme,
+                svg_output=args.svg_output,
+                state_file=args.state_file,
+                dry_run=args.dry_run,
+                verbose=args.verbose,
+            )
+        except ConfigError as exc:
+            print(str(exc), file=sys.stderr)
+            return 1
         return _run_update()
     return 0

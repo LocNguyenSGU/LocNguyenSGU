@@ -1,5 +1,7 @@
 from pathlib import Path
 
+import pytest
+
 from readme_updater.cli import build_parser
 from readme_updater.cli import main
 
@@ -62,4 +64,33 @@ def test_main_update_emits_placeholder_message(
     assert (
         capsys.readouterr().out
         == "readme-updater update skeleton wired; implementation pending.\n"
+    )
+
+
+def test_main_update_returns_error_for_missing_credentials(
+    monkeypatch: pytest.MonkeyPatch,
+    capsys,
+) -> None:
+    monkeypatch.delenv("GITHUB_TOKEN", raising=False)
+    monkeypatch.delenv("GITHUB_USER", raising=False)
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "readme-updater",
+            "update",
+            "--days",
+            "30",
+            "--readme",
+            "README.md",
+            "--svg-output",
+            "assets/contributions.svg",
+        ],
+    )
+
+    exit_code = main()
+
+    assert exit_code == 1
+    assert (
+        capsys.readouterr().err
+        == "Missing required environment variable: GITHUB_TOKEN\n"
     )
