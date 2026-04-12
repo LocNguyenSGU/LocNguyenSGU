@@ -10,6 +10,7 @@ from readme_updater.github_api import GitHubClient
 from readme_updater.models import ContributionRecord
 from readme_updater.readme_renderer import render_readme_block
 from readme_updater.svg_renderer import build_summary_metrics, render_svg_card
+from readme_updater.svg_renderer import render_repo_svg_cards
 
 
 def parse_pull_request_identity(url: str) -> tuple[str, str, int]:
@@ -78,7 +79,7 @@ def collect_recent_contributions(
     return unique_records
 
 
-def run_update(runtime_config: object) -> dict[str, str]:
+def run_update(runtime_config: object) -> dict[str, object]:
     github_client = GitHubClient(github_token=runtime_config.github_token)
     logger = (
         lambda message: print(message, file=sys.stderr)
@@ -94,5 +95,11 @@ def run_update(runtime_config: object) -> dict[str, str]:
     )
     groups = group_contributions(contributions)
     readme_block = render_readme_block(groups, days=runtime_config.days)
-    svg = render_svg_card(build_summary_metrics(groups, days=runtime_config.days))
-    return {"readme_block": readme_block, "svg": svg}
+    summary_svg = render_svg_card(build_summary_metrics(groups, days=runtime_config.days))
+    repo_svg_cards = render_repo_svg_cards(groups, days=runtime_config.days)
+    return {
+        "readme_block": readme_block,
+        "svg": repo_svg_cards[0]["svg"],
+        "summary_svg": summary_svg,
+        "svg_cards": repo_svg_cards,
+    }

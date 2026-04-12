@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 from pathlib import Path
 
@@ -26,6 +27,38 @@ def build_parser() -> argparse.ArgumentParser:
     return parser
 
 
+def _slugify_repo_name(repo_full_name: str) -> str:
+    slug = repo_full_name.lower().replace("/", "-")
+    slug = re.sub(r"[^a-z0-9-]", "-", slug)
+    slug = re.sub(r"-+", "-", slug).strip("-")
+    return slug or "repo"
+
+
+def _write_svg_outputs(svg_output: Path, result: dict[str, object]) -> None:
+    svg_output.parent.mkdir(parents=True, exist_ok=True)
+
+    raw_cards = result.get("svg_cards")
+    if not isinstance(raw_cards, list) or not raw_cards:
+        svg_output.write_text(str(result.get("svg", "")))
+        return
+
+    if len(raw_cards) == 1:
+        first_card = raw_cards[0]
+        if isinstance(first_card, dict):
+            svg_output.write_text(str(first_card.get("svg", result.get("svg", ""))))
+            return
+        svg_output.write_text(str(result.get("svg", "")))
+        return
+
+    for card in raw_cards:
+        if not isinstance(card, dict):
+            continue
+        repo_name = str(card.get("repo_full_name", "repo"))
+        file_name = f"{svg_output.stem}-{_slugify_repo_name(repo_name)}{svg_output.suffix}"
+        output_path = svg_output.parent / file_name
+        output_path.write_text(str(card.get("svg", "")))
+
+
 def main() -> int:
     parser = build_parser()
     args = parser.parse_args()
@@ -42,14 +75,13 @@ def main() -> int:
             result = run_update(config)
 
             if config.dry_run:
-                print(result["readme_block"])
+                print(str(result["readme_block"]))
                 return 0
 
             current_readme = config.readme_path.read_text()
-            updated_readme = replace_marker_block(current_readme, result["readme_block"])
+            updated_readme = replace_marker_block(current_readme, str(result["readme_block"]))
             config.readme_path.write_text(updated_readme)
-            config.svg_output.parent.mkdir(parents=True, exist_ok=True)
-            config.svg_output.write_text(result["svg"])
+            _write_svg_outputs(config.svg_output, result)
             return 0
         except (ConfigError, GitHubApiError, ReadmeMarkerError) as exc:
             print(str(exc), file=sys.stderr)

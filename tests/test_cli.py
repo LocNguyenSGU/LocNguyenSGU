@@ -63,7 +63,13 @@ def test_main_update_writes_svg_and_readme(
         "readme_updater.cli.run_update",
         lambda runtime_config: {
             "readme_block": "## Recent Open Source Contributions",
-            "svg": "<svg></svg>",
+            "svg": "<svg>fallback</svg>",
+            "svg_cards": [
+                {
+                    "repo_full_name": "owner/repo",
+                    "svg": "<svg>repo-card</svg>",
+                }
+            ],
         },
     )
     monkeypatch.setattr("sys.argv", ["readme-updater", "update"])
@@ -72,7 +78,56 @@ def test_main_update_writes_svg_and_readme(
 
     assert exit_code == 0
     assert "## Recent Open Source Contributions" in readme_path.read_text()
-    assert svg_path.read_text() == "<svg></svg>"
+    assert svg_path.read_text() == "<svg>repo-card</svg>"
+
+
+def test_main_update_writes_one_svg_per_repo_when_multiple_groups(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    readme_path = tmp_path / "README.md"
+    readme_path.write_text(
+        "before\n<!-- contributions:start -->\nold\n<!-- contributions:end -->\nafter\n"
+    )
+    svg_path = tmp_path / "assets" / "contributions.svg"
+
+    config = RuntimeConfig(
+        github_token="token",
+        github_user="nguyenhuuloc",
+        readme_path=readme_path,
+        svg_output=svg_path,
+        state_file=tmp_path / ".state.json",
+        days=30,
+        dry_run=False,
+        verbose=False,
+    )
+
+    monkeypatch.setattr("readme_updater.cli.load_config", lambda **_: config)
+    monkeypatch.setattr(
+        "readme_updater.cli.run_update",
+        lambda runtime_config: {
+            "readme_block": "## Recent Open Source Contributions",
+            "svg": "<svg>fallback</svg>",
+            "svg_cards": [
+                {
+                    "repo_full_name": "HKUDS/DeepTutor",
+                    "svg": "<svg>card1</svg>",
+                },
+                {
+                    "repo_full_name": "chatgptprojects/clear-code",
+                    "svg": "<svg>card2</svg>",
+                },
+            ],
+        },
+    )
+    monkeypatch.setattr("sys.argv", ["readme-updater", "update"])
+
+    exit_code = main()
+
+    assert exit_code == 0
+    assert (tmp_path / "assets" / "contributions-hkuds-deeptutor.svg").read_text() == "<svg>card1</svg>"
+    assert (tmp_path / "assets" / "contributions-chatgptprojects-clear-code.svg").read_text() == "<svg>card2</svg>"
+    assert not svg_path.exists()
 
 
 def test_main_update_dry_run_does_not_modify_files(
