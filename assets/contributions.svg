@@ -1,0 +1,11 @@
+<svg width="680" height="240" viewBox="0 0 680 240" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Merged Upstream Contributions summary card">
+  <rect width="680" height="240" rx="24" fill="#0B1020"/>
+  <rect x="24" y="24" width="632" height="192" rx="20" fill="#111827" stroke="#243042"/>
+  <text x="44" y="58" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="15" letter-spacing="0.12em">MERGED UPSTREAM CONTRIBUTIONS</text>
+  <text x="44" y="126" fill="#F8FAFC" font-family="Inter, Arial, sans-serif" font-size="64" font-weight="700">2</text>
+  <text x="44" y="156" fill="#CBD5E1" font-family="Inter, Arial, sans-serif" font-size="16">merged PRs</text>
+  <text x="248" y="86" fill="#E2E8F0" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600">HKUDS/DeepTutor</text>
+  <text x="248" y="116" fill="#94A3B8" font-family="Inter, Arial, sans-serif" font-size="15">17.1k stars</text>
+  <text x="248" y="146" fill="#CBD5E1" font-family="Inter, Arial, sans-serif" font-size="15">2 upstream repos</text>
+  <text x="44" y="188" fill="#64748B" font-family="Inter, Arial, sans-serif" font-size="15">Last 20 days</text>
+</svg>

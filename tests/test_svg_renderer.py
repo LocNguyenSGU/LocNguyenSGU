@@ -46,19 +46,20 @@ def test_build_summary_metrics_counts_groups_prs_and_top_repo() -> None:
 
 def test_render_svg_card_uses_premium_technical_prestige_copy() -> None:
     svg = render_svg_card(build_summary_metrics(make_groups(), days=30))
-    assert "GITHUB TRENDING" in svg
-    assert "Repository Of The Day" in svg
+    assert "Merged Upstream Contributions" in svg
+    assert "merged PRs" in svg
     assert "Top target" in svg
     assert "1 upstream repo" in svg
     assert "17.0k stars" in svg
     assert "Last 30 days" in svg
+    assert "Repository Of The Day" not in svg
 
 
 def test_render_svg_card_uses_editorial_typography_and_layered_surface() -> None:
     svg = render_svg_card(build_summary_metrics(make_groups(), days=30))
     assert 'rx="18"' in svg
     assert "fill-opacity" in svg
-    assert "stroke-linecap" in svg
+    assert 'id="decorative-emblem"' in svg
     assert "Arial, sans-serif" in svg
 
 
@@ -84,5 +85,6 @@ def test_render_repo_svg_cards_returns_one_card_per_repo_with_distinct_colors() 
     assert cards[0]["repo_full_name"] == "HKUDS/DeepTutor"
     assert cards[1]["repo_full_name"] == "chatgptprojects/clear-code"
     assert cards[0]["color"] != cards[1]["color"]
-    assert "#1 Repository Of The Day" in cards[0]["svg"]
-    assert "#2 Repository Of The Day" in cards[1]["svg"]
+    assert "Top target: HKUDS/DeepTutor" in cards[0]["svg"]
+    assert "Top target: chatgptprojects/clear-code" in cards[1]["svg"]
+    assert "Repository Of The Day" not in cards[0]["svg"]
