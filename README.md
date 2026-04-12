@@ -110,6 +110,12 @@
     <th>Contribution Card</th>
   </tr>
   <tr>
+    <td><a href="https://github.com/sickn33/antigravity-awesome-skills">sickn33/antigravity-awesome-skills</a></td>
+    <td align="center">
+      <img src="./assets/contributions-sickn33-antigravity-awesome-skills.svg" alt="sickn33/antigravity-awesome-skills contribution card" width="420" />
+    </td>
+  </tr>
+  <tr>
     <td><a href="https://github.com/HKUDS/DeepTutor">HKUDS/DeepTutor</a></td>
     <td align="center">
       <img src="./assets/contributions-hkuds-deeptutor.svg" alt="HKUDS/DeepTutor contribution card" width="420" />
