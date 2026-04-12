@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "readme-updater"
+version = "0.1.0"
+description = "CLI to update GitHub README contribution sections from merged upstream PRs"
+requires-python = ">=3.12"
+dependencies = [
+  "httpx>=0.27.0,<1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0.0,<9.0.0",
+  "pytest-mock>=3.14.0,<4.0.0",
+  "respx>=0.21.0,<1.0.0",
+]
+
+[project.scripts]
+readme-updater = "readme_updater.cli:main"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
