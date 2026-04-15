@@ -99,3 +99,9 @@
   </picture>
 </p>
 
+
+<!-- contributions:start -->
+## Recent Open Source Contributions
+
+<img src="./assets/contributions.svg" alt="Recent open source contributions" width="100%" />
+<!-- contributions:end -->
