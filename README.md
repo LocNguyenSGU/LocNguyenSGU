@@ -112,17 +112,10 @@
     <th>Contribution Card</th>
   </tr>
   <tr>
-    <td><a href="https://github.com/sickn33/antigravity-awesome-skills">sickn33/antigravity-awesome-skills</a></td>
-    <td>2026-01-19</td>
+    <td><a href="https://github.com/coleam00/Archon">coleam00/Archon</a></td>
+    <td>2026-04-16</td>
     <td align="center">
-      <img src="./assets/contributions-sickn33-antigravity-awesome-skills.svg" alt="sickn33/antigravity-awesome-skills contribution card" width="420" />
-    </td>
-  </tr>
-  <tr>
-    <td><a href="https://github.com/HKUDS/DeepTutor">HKUDS/DeepTutor</a></td>
-    <td>2026-04-08</td>
-    <td align="center">
-      <img src="./assets/contributions-hkuds-deeptutor.svg" alt="HKUDS/DeepTutor contribution card" width="420" />
+      <img src="./assets/contributions-coleam00-archon.svg" alt="coleam00/Archon contribution card" width="420" />
     </td>
   </tr>
   <tr>
@@ -130,13 +123,6 @@
     <td>2026-04-15</td>
     <td align="center">
       <img src="./assets/contributions-opendataloader-project-opendataloader-pdf.svg" alt="opendataloader-project/opendataloader-pdf contribution card" width="420" />
-    </td>
-  </tr>
-  <tr>
-    <td><a href="https://github.com/chatgptprojects/clear-code">chatgptprojects/clear-code</a></td>
-    <td>2026-04-02</td>
-    <td align="center">
-      <img src="./assets/contributions-chatgptprojects-clear-code.svg" alt="chatgptprojects/clear-code contribution card" width="420" />
     </td>
   </tr>
 </table>
