@@ -1,79 +1,50 @@
 <h1 align="center">👋 Hi, I'm <span style="color:#00C853;">Loc Nguyen</span></h1>
 
+<p align="center"><b>Software Engineer</b> · <b>AI Researcher</b> · e-commerce tools (Shopify, Rails) · Ho Chi Minh City</p>
+
 ### 💡 About Me
-- 🎓 Final-year student at **Sai Gon University**
-- 🌱 Currently focusing on **Backend Development**, **Scalable System Design**, and **AI**
-- 🎯 Goal: Become a **versatile fullstack AI developer** with strong teamwork & leadership skills
-- 📫 Reach me at: **lockbkbang@gmail.com**
-- 🌍 Personal Website: [https://locnguyensgu.github.io/PersonalProject/](https://locnguyensgu.github.io/PersonalProject/)
-- 🌍 Personal Blog: [https://locnguyensgu-blog.vercel.app/](https://locnguyensgu-blog.vercel.app/)
+- 💼 Software Engineer, building internal tools and Shopify storefronts for e-commerce operations
+- 🔬 Researcher: paper accepted at **FJCAI 2026** (author name: **LocNH**)
+- 🤖 After work: I build AI pipelines that do real jobs end to end, and write about it
+- 🎬 Run the YouTube channel **[Đi Làm IT](https://www.youtube.com/@dilamitvn)**: IT and security news explained for Vietnamese developers, produced with a video pipeline I built myself
+- 🎓 Graduated from **Sai Gon University** (Information Technology)
+- 📫 **lockbkbang@gmail.com** · 🌍 [Blog](https://locnguyensgu-blog.vercel.app/) · [Personal site](https://locnguyensgu.github.io/PersonalProject/) · [Facebook](https://www.facebook.com/profile.php?id=100048582399397)
 
 ---
 
-### 🤝 Connect with Me
-<p align="center">
-  <a href="https://www.facebook.com/profile.php?id=100048582399397" target="_blank">
-    <img src="https://img.shields.io/badge/Facebook-1877F2?style=for-the-badge&logo=facebook&logoColor=white" alt="Facebook"/>
-  </a>
-  <a href="mailto:lockbkbang@gmail.com" target="_blank">
-    <img src="https://img.shields.io/badge/Gmail-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Gmail"/>
-  </a>
-  <a href="https://github.com/LocNguyenSGU" target="_blank">
-    <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/>
-  </a>
-</p>
+### 🛠️ What I'm Building
+
+| Project | What it does |
+|---|---|
+| **AI video pipeline** (private) → [Đi Làm IT](https://www.youtube.com/@dilamitvn) | Research → script → voice → hand-drawn animation → QA → upload. Checks every number against primary sources, screenshots them with citations, blocks a render when the screen sits still for more than 4 s. ~0.4–0.7 USD per 4-minute video |
+| [moodle-adaptive-learning-plugin](https://github.com/LocNguyenSGU/moodle-adaptive-learning-plugin) | Q-learning picks the next lesson per student, plugged into Moodle via LTI 1.3. +22.5% scores, −51% weak skills, decisions explained with SHAP. Basis of the FJCAI 2026 paper |
+| [ovh-bot](https://github.com/LocNguyenSGU/ovh-bot) | Monitors OVH VPS stock availability in the Asia region |
+
+Open source: merged contributions to [DeepTutor](https://github.com/HKUDS/DeepTutor), [Archon](https://github.com/coleam00/Archon), [opendataloader-pdf](https://github.com/opendataloader-project/opendataloader-pdf) and more (cards below).
 
 ---
 
-### 🧠 Tech Stack
+### 🧠 Tech I Use
 
 <p align="center">
-  <!-- Frontend -->
-  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white"/>
-  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"/>
-  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"/>
-  <img src="https://img.shields.io/badge/Sass-CC6699?style=for-the-badge&logo=sass&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Tailwind-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Ruby on Rails-CC0000?style=for-the-badge&logo=rubyonrails&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Shopify-7AB55C?style=for-the-badge&logo=shopify&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white"/>
   <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black"/>
-  <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white"/>
-</p>
-
-<p align="center">
-  <!-- Backend -->
-  <img src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=java&logoColor=white"/>
-  <img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Servlet-3c99dc?style=for-the-badge&logo=java&logoColor=white"/>
-  <img src="https://img.shields.io/badge/JSP-007396?style=for-the-badge&logo=java&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=openjdk&logoColor=white"/>
   <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Thymeleaf-005F0F?style=for-the-badge&logo=thymeleaf&logoColor=white"/>
 </p>
-
 <p align="center">
-  <!-- Database & Messaging -->
-  <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white"/>
-  <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white"/>
+  <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white"/>
   <img src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Kafka-231F20?style=for-the-badge&logo=apache-kafka&logoColor=white"/>
-  <img src="https://img.shields.io/badge/RabbitMQ-FF6600?style=for-the-badge&logo=rabbitmq&logoColor=white"/>
-</p>
-
-<p align="center">
-  <!-- Tools & DevOps -->
   <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"/>
-  <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black"/>
-  <img src="https://img.shields.io/badge/Cloudinary-3448C5?style=for-the-badge&logo=cloudinary&logoColor=white"/>
-  <img src="https://img.shields.io/badge/AWS EC2-FF9900?style=for-the-badge&logo=amazon-ec2&logoColor=white"/>
-  <img src="https://img.shields.io/badge/AWS S3-569A31?style=for-the-badge&logo=amazon-s3&logoColor=white"/>
-  <img src="https://img.shields.io/badge/OpenAI-412991?style=for-the-badge&logo=openai&logoColor=white"/>
+  <img src="https://img.shields.io/badge/AWS-FF9900?style=for-the-badge&logo=amazonwebservices&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Claude Code-D97757?style=for-the-badge&logo=anthropic&logoColor=white"/>
+  <img src="https://img.shields.io/badge/OpenAI API-412991?style=for-the-badge&logo=openai&logoColor=white"/>
 </p>
 
-<p align="center">
-  <!-- Patterns & ML -->
-  <img src="https://img.shields.io/badge/Design Pattern-4A4A4A?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/Microservice-FF9F1C?style=for-the-badge"/>
-  <img src="https://img.shields.io/badge/CNN-FF6F61?style=for-the-badge"/>
-</p>
+---
 
 ### 🐍 My Contribution Snake
 <p align="center">
