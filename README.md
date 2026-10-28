@@ -20,7 +20,7 @@
 | [moodle-adaptive-learning-plugin](https://github.com/LocNguyenSGU/moodle-adaptive-learning-plugin) | Q-learning picks the next lesson per student, plugged into Moodle via LTI 1.3. +22.5% scores, −51% weak skills, decisions explained with SHAP. Basis of the FJCAI 2026 paper |
 | [ovh-bot](https://github.com/LocNguyenSGU/ovh-bot) | Monitors OVH VPS stock availability in the Asia region |
 
-Open source: merged contributions to [DeepTutor](https://github.com/HKUDS/DeepTutor), [Archon](https://github.com/coleam00/Archon), [opendataloader-pdf](https://github.com/opendataloader-project/opendataloader-pdf) and more (cards below).
+Open source: merged contributions to [DeepTutor](https://github.com/HKUDS/DeepTutor), [Archon](https://github.com/coleam00/Archon), [opendataloader-pdf](https://github.com/opendataloader-project/opendataloader-pdf) and more ([list below](#-open-source-contributions)).
 
 ---
 
@@ -71,51 +71,13 @@ Open source: merged contributions to [DeepTutor](https://github.com/HKUDS/DeepTu
 </p>
 
 
-<!-- contributions:start -->
-## Recent Open Source Contributions
+## 🌍 Open Source Contributions
 
-### SVG Cards By Repository
+| Project | Stars | My merged PR | Merged |
+|---|---|---|---|
+| [sickn33/agentic-awesome-skills](https://github.com/sickn33/agentic-awesome-skills) | ![stars](https://img.shields.io/github/stars/sickn33/agentic-awesome-skills?style=flat&label=%E2%98%85&color=555) | [feat: Add Moodle External API Development skill](https://github.com/sickn33/agentic-awesome-skills/pull/6) | 2026‑01‑19 |
+| [HKUDS/DeepTutor](https://github.com/HKUDS/DeepTutor) | ![stars](https://img.shields.io/github/stars/HKUDS/DeepTutor?style=flat&label=%E2%98%85&color=555) | [docs: clarify GitHub Copilot provider login semantics](https://github.com/HKUDS/DeepTutor/pull/262) | 2026‑04‑08 |
+| [opendataloader-project/opendataloader-pdf](https://github.com/opendataloader-project/opendataloader-pdf) | ![stars](https://img.shields.io/github/stars/opendataloader-project/opendataloader-pdf?style=flat&label=%E2%98%85&color=555) | [fix: update CID warning hybrid guidance](https://github.com/opendataloader-project/opendataloader-pdf/pull/406) | 2026‑04‑15 |
+| [coleam00/Archon](https://github.com/coleam00/Archon) | ![stars](https://img.shields.io/github/stars/coleam00/Archon?style=flat&label=%E2%98%85&color=555) | [fix: accept GitHub URLs in settings add project](https://github.com/coleam00/Archon/pull/1110) | 2026‑04‑16 |
+| [Leanmcp/gateway-skills](https://github.com/Leanmcp/gateway-skills) | ![stars](https://img.shields.io/github/stars/Leanmcp/gateway-skills?style=flat&label=%E2%98%85&color=555) | [fix: correct README repository metrics links](https://github.com/Leanmcp/gateway-skills/pull/13) | 2026‑04‑02 |
 
-<table>
-  <tr>
-    <th>Repository</th>
-    <th>Latest Merge</th>
-    <th>Contribution Card</th>
-  </tr>
-  <tr>
-    <td><a href="https://github.com/sickn33/antigravity-awesome-skills">sickn33/antigravity-awesome-skills</a></td>
-    <td>2026-01-19</td>
-    <td align="center">
-      <img src="./assets/contributions-sickn33-antigravity-awesome-skills.svg" alt="sickn33/antigravity-awesome-skills contribution card" width="420" />
-    </td>
-  </tr>
-  <tr>
-    <td><a href="https://github.com/HKUDS/DeepTutor">HKUDS/DeepTutor</a></td>
-    <td>2026-04-08</td>
-    <td align="center">
-      <img src="./assets/contributions-hkuds-deeptutor.svg" alt="HKUDS/DeepTutor contribution card" width="420" />
-    </td>
-  </tr>
-  <tr>
-    <td><a href="https://github.com/coleam00/Archon">coleam00/Archon</a></td>
-    <td>2026-04-16</td>
-    <td align="center">
-      <img src="./assets/contributions-coleam00-archon.svg" alt="coleam00/Archon contribution card" width="420" />
-    </td>
-  </tr>
-  <tr>
-    <td><a href="https://github.com/opendataloader-project/opendataloader-pdf">opendataloader-project/opendataloader-pdf</a></td>
-    <td>2026-04-15</td>
-    <td align="center">
-      <img src="./assets/contributions-opendataloader-project-opendataloader-pdf.svg" alt="opendataloader-project/opendataloader-pdf contribution card" width="420" />
-    </td>
-  </tr>
-  <tr>
-    <td><a href="https://github.com/chatgptprojects/clear-code">chatgptprojects/clear-code</a></td>
-    <td>2026-04-02</td>
-    <td align="center">
-      <img src="./assets/contributions-chatgptprojects-clear-code.svg" alt="chatgptprojects/clear-code contribution card" width="420" />
-    </td>
-  </tr>
-</table>
-<!-- contributions:end -->
