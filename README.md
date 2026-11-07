@@ -16,7 +16,7 @@
 
 | Project | What it does |
 |---|---|
-| **AI video pipeline** (private) → [Đi Làm IT](https://www.youtube.com/@dilamitvn) | Research → script → voice → hand-drawn animation → QA → upload. Checks every number against primary sources, screenshots them with citations, blocks a render when the screen sits still for more than 4 s. ~0.4–0.7 USD per 4-minute video |
+| [**whiteboard-explainer-engine**](https://github.com/LocNguyenSGU/whiteboard-explainer-engine) → [Đi Làm IT](https://www.youtube.com/@dilamitvn) | Open-source engine behind my channel: YAML storyboard → hand-drawn explainer video, synced to the AI voice-over word by word, real screen recordings inside the drawing. Blocks the render when the screen sits still > 4 s or a number on screen is never said. 0.46–2.28 USD per long video (images + voice). Research, voice and publishing stay in a private pipeline |
 | [moodle-adaptive-learning-plugin](https://github.com/LocNguyenSGU/moodle-adaptive-learning-plugin) | Q-learning picks the next lesson per student, plugged into Moodle via LTI 1.3. +22.5% scores, −51% weak skills, decisions explained with SHAP. Basis of the FJCAI 2026 paper |
 | [ovh-bot](https://github.com/LocNguyenSGU/ovh-bot) | Monitors OVH VPS stock availability in the Asia region |
 
